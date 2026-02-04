@@ -10,6 +10,43 @@ services:
       - .:/app
     environment:
       - PYTHONUNBUFFERED=1
+      - MLFLOW_TRACKING_URI=http://mlflow:5000 
+    networks:
+      - monitoring
+
+  dataset-runner:
+    build: .
+    container_name: dataset-runner
+    depends_on:
+      - app
+      - mlflow
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - API_URL=http://app:8000/api/classify
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - mlflow_data:/mlflow
+    command: >
+      sh -c "echo '⏳ Attente de 15s...' && 
+             sleep 15 && 
+             python api/src/dataset/dataset.py"
+    networks:
+      - monitoring
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.14.1
+    container_name: mlflow_server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    command: >
+      mlflow server 
+      --backend-store-uri sqlite:///mlflow/mlflow.db 
+      --default-artifact-root /mlflow/artifacts 
+      --host 0.0.0.0 
+      --port 5000
+    volumes:
+      - mlflow_data:/mlflow
     networks:
       - monitoring
 
@@ -50,3 +87,4 @@ networks:
 volumes:
   prometheus_data:
   grafana_data:
+  mlflow_data:
