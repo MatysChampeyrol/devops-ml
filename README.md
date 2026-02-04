@@ -22,7 +22,7 @@ docker compose up -d
 ```
 
 ## utiliser les APIs sur le swagger
-L'api de classification est api/classify. Il vous suffit de rentrer le destinataire, le sujet et le corps du mail et l'api retourne un json avec la classification associée du mail et sa probabilité. L'API fonctionne uniquement avec des emails en anglais. Vous pouvez tester directement via le swagger du backend : 
+L'api de classification est api/classify. Il vous suffit de rentrer le destinataire, le sujet et le corps du mail et l'api retourne un json avec la classification associée du mail et sa probabilité. L'API fonctionne uniquement avec des emails en anglais. Vous pouvez tester directement via le swagger du backend: 
 ```
 http://127.0.0.1:8000/docs
 ```
@@ -39,10 +39,11 @@ admin
 
 ## déploiment
 Le backend a été déployé sur Huggingface space à l'adresse suivante
-```
+```bash
 https://matyschampeyrol-devops-ml.hf.space
 
-#pour acceder au swagger et tester l'api de classification de mail
+# pour acceder au swagger et tester l'api de classification de mail
+
 https://matyschampeyrol-devops-ml.hf.space/docs
 ```
 
