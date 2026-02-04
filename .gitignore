@@ -4,4 +4,4 @@ __pycache__/
 mlflow.db
 mlflow.db-journal
 
-inference_config.yaml.1
+/.pytest_cache
